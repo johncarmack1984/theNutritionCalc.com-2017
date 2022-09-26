@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Nutrition Calc - a John Carmack production</title>
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="style.css">
+
+    </head>
+    <body>
+
+      <div name="splash" class="splash">
+          <p>
+            <h1>theNutritionCalc</h1>
+          </p>
+          <!--<p>Hello!</p>
+          <p>Let's make a custom nutrition plan.</p>
+          <p><button type="submit" id="okaysplash">Okay!</button></p>-->
+        </div>
+
+      <div name="input" class="form">
+        <!--<form name="profile">-->
+
+            <!--<div name="race" class="question">
+              <p>
+                Which best describes your race? <br>
+                <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4278349/" target="_blank">(why do we need to know this?)</a>
+              </p>
+              <p>
+                <select id="race" name="race">
+                  <option name="select" value="select">-----SELECT ONE------</option>
+                  <option value="asian">Asian</option>
+                  <option value="black">Black</option>
+                  <option value="hispanic">Hispanic</option>
+                  <option value="native-american">Native American</option>
+                  <option value="white">White / Caucasian</option>
+                  <option value="other">Other</option>
+                </select>
+              </p>
+            </div>-->
+
+            <div name="weight" class="question weight">
+              <p>
+                How much do you weigh?<br />
+                <input id="weight" type="text" pattern="[0-9]*" name="weight" maxlength="3" width="3" placeholder="weight"> pounds
+              </p>
+            </div>
+
+            <div name="bodyfat" class="question bodyfat">
+              <p>
+                What is your body fat percentage?<br />
+                (skip if unknown)<br />
+                <input id="bodyfat" type="text" pattern="[0-9]*" name="bodyfat" maxlength="2" width="3" placeholder="bf"> %
+              </p>
+            </div>
+
+            <div name="age" class="question age">
+              <p>
+                How old are you?<br />
+                <input length="3" pattern="[0-9]*" name="age" id="age" placeholder="age"> years
+              </p>
+            </div>
+
+            <div name="height" class="question height">
+              <p>
+                What is your height in inches?<br />
+                <input id="height" type="text" pattern="[0-9]*" name="height" maxlength="3" width="3" placeholder="height"> inches
+              </p>
+            </div>
+
+            <div name="maleorfemale" class="question gender">
+              <p>
+                What is your gender?<br />
+                <select id="gender" name="gender">
+                  <option name="" value="">---Select</option>
+                  <option name="male" value="male">Male</option>
+                  <option name="female" value="female">Female</option>
+                </select>
+              </p>
+            </div>
+
+            <div name="goals" class="question">
+              <p>
+                What is your fitness goal?<br />
+                <select id="goal" name="goal">
+                  <!--<option name="select" value="select">-----SELECT ONE------</option>-->
+                  <option name="cut" value="cut">Lose Weight</option>
+                  <option name="maintain" value="maintain" selected>General Health / Maintenance</option>
+                  <option name="bulk" value="bulk">Add Bulk</option>
+                </select>
+              </p>
+            </div>
+
+            <div name="submit" class="question">
+              <!--<p>
+                All set? Let's calculate your nutrition!
+              </p>-->
+              <p>
+                <button type="submit" id="submit">Calculate!</button>
+              </p>
+            </div>
+          <!--</form>-->
+        </div>
+
+      <div name="rdatable" class="rdatable">
+
+          <table name="rdas" class="rdas">
+            <tr>
+              <th colspan="4" align="center">Nutrient Recommendations</th>
+            </tr>
+
+            <tr>
+              <th class="rda nutrient">Nutrient</th>
+              <th class="rda yourmin">Min</th>
+              <th class="rda yourrda">Rec.</th>
+              <th class="rda yourmax">Max
+            </tr>
+
+            <tr id="calories">
+              <td class="rda nutrient calories">Calories</td>
+              <td class="rda yourmin calories"><div id="yourCaloriesMin">---- kcal</div></td>
+              <td class="rda yourrda calories"><div id="yourCaloriesRda">---- kcal</div></td>
+              <td class="rda yourmax calories"><div id="yourCaloriesMax">---- kcal</div></td>
+            </tr>
+
+            <tr id="protein">
+              <td class="rda nutrient protein">Protein (10-35%)</td>
+              <td class="rda yourmin protein"><div id="yourProteinMin">10%</div></td>
+              <td class="rda yourrda protein"><div id="yourProteinRda">---g</div></td>
+              <td class="rda yourmax protein"><div id="yourProteinMax">35%</div></td>
+            </tr>
+
+            <tr id="carbs">
+              <td class="rda nutrient carbs">Carbohydrates (45-65%)</td>
+              <td class="rda yourmin carbs"><div id="yourCarbsMin">45%</div></td>
+              <td class="rda yourrda carbs"><div id="yourCarbsRda">---g</div></td>
+              <td class="rda yourmax carbs"><div id="yourCarbsMax">65%</div></td>
+            </tr>
+
+            <tr id="fiber">
+              <td class="rda nutrient fiber">Fiber</td>
+              <td class="rda yourmin fiber"><div id="yourFiberMin">--g</div></td>
+              <td class="rda yourrda fiber"><div id="yourFiberRda">--g</div></td>
+              <td class="rda yourmax fiber"><div id="yourFiberMax">n/a</div></td>
+            </tr>
+
+            <tr id="fat">
+              <td class="rda nutrient fat">Total Fat (20-35%)</td>
+              <td class="rda yourmin fat"><div id="yourFatMin">20%</div></td>
+              <td class="rda yourrda fat"><div id="yourFatRda">--g</div></td>
+              <td class="rda yourmax fat"><div id="yourFatMax">35%</div></td>
+            </tr>
+
+            <tr id="sfa">
+              <td class="rda nutrient sfa">Saturated Fats</td>
+              <td class="rda yourmin sfa"><div id="yourSfaMin">0g</div></td>
+              <td class="rda yourrda sfa"><div id="yourSfaRda">0g</div></td>
+              <td class="rda yourmax sfa"><div id="yourSfaMax">6%</div></td>
+            </tr>
+
+            <tr id="pufa">
+              <td class="rda nutrient pufa">Polyunsaturated Fats</td>
+              <td class="rda yourmin pufa"><div id="yourPufaMin">5%</div></td>
+              <td class="rda yourrda pufa"><div id="yourPufaRda">-g</div></td>
+              <td class="rda yourmax pufa"><div id="yourPufaMax">10%</div></td>
+            </tr>
+
+            <tr id="n3pufa">
+              <td class="rda nutrient n3pufa">Omega 3 PUFats</td>
+              <td class="rda yourmin n3pufa"><div id="yourn3PufaMin">0.5%</div></td>
+              <td class="rda yourrda n3pufa"><div id="yourn3PufaRda">-g</div></td>
+              <td class="rda yourmax n3pufa"><div id="yourn3PufaMax">2%</div></td>
+            </tr>
+
+            <tr id="n6pufa">
+              <td class="rda nutrient n6pufa">Omega 6 PUFats</td>
+              <td class="rda yourmin n6pufa"><div id="yourn6PufaMin">0.5%</div></td>
+              <td class="rda yourrda n6pufa"><div id="yourn6PufaRda">-g</div></td>
+              <td class="rda yourmax n6pufa"><div id="yourn6PufaMax">8%</div></td>
+            </tr>
+
+            <tr id="Mufa">
+              <td class="rda nutrient mufa">Monounsaturated Fat</td>
+              <td class="rda yourmin mufa"><div id="yourMufaMin">15%</div></td>
+              <td class="rda yourrda mufa"><div id="yourMufaRda">--g</div></td>
+              <td class="rda yourmax mufa"><div id="yourMufaMax">20%</div></td>
+            </tr>
+
+          </table>
+
+        </div>
+
+      <div name ="bibliography" class="bibliography">
+        <h4>Bibliography</h4>
+        <p>
+          <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4183531/" target="_blank">Calorie/RMR Equations</a><br />
+          <a href="http://bayesianbodybuilding.com/the-myth-of-1glb-optimal-protein-intake-for-bodybuilders/" target="_blank">Protein Recommendation</a><br />
+          <a href="http://www.eatrightpro.org/~/media/eatrightpro%20files/practice/position%20and%20practice%20papers/position%20papers/healthimplicationsfiber.ashx" target="_blank">Fiber Recommendations</a><br />
+          <a href="http://www.andjrnl.org/article/S2212-2672(13)01672-9/pdf" target="blank">Fatty Acid Recommendations</a><br />
+          <!--<a href="http://www.nationalacademies.org/hmd/~/media/Files/Infographics/2014/DRIs.pdf?la=en" target="_blank">Micronutrient Recommendations</a><br />-->
+        </p>
+      </div>
+
+
+      <div name="footer" class="footer">
+        <p>
+          <b>theNutritionCalc</b> | by John Carmack
+        </p>
+      </div>
+
+      <div name="javascript">
+        <script src="main.js"></script>
+      </div>
+
+    </body>
+
+</html>
+<!-- Bibliography:
+
+Weight-based equation for determing calories in recreational athletes 18-35: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4183531/
